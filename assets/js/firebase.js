@@ -8,10 +8,10 @@ const firebaseConfig = {
   measurementId: "G-7FSLNBKQ56"
 };
 
-// init
 firebase.initializeApp(firebaseConfig);
 
 // 🔥 WAJIB GLOBAL
+window.auth = firebase.auth();
 window.db = firebase.firestore();
 
-console.log("Firebase Ready");
+console.log("Firebase + Firestore READY");
