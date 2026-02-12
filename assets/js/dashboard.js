@@ -1,25 +1,36 @@
-auth.onAuthStateChanged(async user => {
+import { supabase } from "./supabase.js";
 
-  if (!user) {
-    window.location.href = "index.html";
-    return;
-  }
+async function init() {
+    const { data: { session } } = await supabase.auth.getSession();
 
-  const snap = await db.collection("users")
-    .where("email", "==", user.email)
-    .get();
+    if (!session) {
+        window.location.href = "index.html";
+        return;
+    }
 
-  const data = snap.docs[0].data();
+    const { data, error } = await supabase
+        .from("users")
+        .select("display_name, message")
+        .eq("id", session.user.id)
+        .single();
 
-  document.getElementById("welcome").innerText =
-    "Happy Valentine, " + data.displayName;
+    if (error || !data) {
+        document.getElementById("welcome").innerText = "Welcome 💕";
+        document.getElementById("message").innerText = "";
+        return;
+    }
 
-  document.getElementById("message").innerText =
-    data.message;
-});
+    document.getElementById("welcome").innerText =
+        "Happy Valentine, " + data.display_name + " 💖";
 
-function logout() {
-  auth.signOut().then(() => {
-    window.location.href = "index.html";
-  });
+    document.getElementById("message").innerText =
+        data.message || "You are loved ❤️";
 }
+
+async function logout() {
+    await supabase.auth.signOut();
+    window.location.href = "index.html";
+}
+
+window.logout = logout;
+init();
