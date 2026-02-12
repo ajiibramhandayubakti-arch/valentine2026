@@ -13,9 +13,8 @@ async function login() {
     }
 
     try {
-        console.log("🔍 Looking up username:", username);
+        console.log("LOOKING USER:", username);
 
-        // Cari user berdasarkan username
         const { data, error } = await supabase
             .from("users")
             .select("email")
@@ -23,36 +22,21 @@ async function login() {
             .single();
 
         if (error || !data) {
-            console.warn("❌ Username not found");
             errorEl.innerText = "Username not found";
             return;
         }
 
-        console.log("✅ Found user, signing in with email:", data.email);
-
-        // Login pakai email + password
         const { error: loginError } = await supabase.auth.signInWithPassword({
             email: data.email,
-            password: password,
+            password
         });
 
         if (loginError) throw loginError;
 
-        console.log("✅ Login successful! Redirecting...");
         window.location.href = "dashboard.html";
 
-    } catch (error) {
-        console.error("❌ Login error:", error.message);
-
-        if (error.message.includes("Invalid login credentials")) {
-            errorEl.innerText = "Wrong password";
-        } else if (error.message.includes("Email not confirmed")) {
-            errorEl.innerText = "Please verify your email first";
-        } else if (error.message.includes("Too many requests")) {
-            errorEl.innerText = "Too many attempts. Try again later";
-        } else {
-            errorEl.innerText = "Login failed: " + error.message;
-        }
+    } catch (err) {
+        errorEl.innerText = err.message;
     }
 }
 
