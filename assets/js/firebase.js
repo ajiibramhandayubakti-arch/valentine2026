@@ -6,4 +6,11 @@ const firebaseConfig = {
   messagingSenderId: "21524686863",
   appId: "1:21524686863:web:a126ceef15bfe17962db7a",
   measurementId: "G-7FSLNBKQ56"
-};
+}
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// TEST KONEKSI
+console.log("🔥 Firebase connected")
+;
