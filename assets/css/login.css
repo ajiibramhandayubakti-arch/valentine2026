@@ -1,0 +1,118 @@
+/* ===== GLOBAL ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  overflow: hidden;
+  color: white;
+}
+
+/* ===== ANIMATED EMERALD GLOW ===== */
+body::before {
+  content: "";
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(
+    circle,
+    rgba(45,212,191,0.35),
+    transparent 70%
+  );
+  filter: blur(40px);
+  animation: moveGlow 10s infinite alternate ease-in-out;
+}
+
+@keyframes moveGlow {
+  from { transform: translate(-220px, -220px); }
+  to   { transform: translate(220px, 220px); }
+}
+
+/* ===== LOGIN CARD ===== */
+.login-card {
+  position: relative;
+  z-index: 2;
+  width: 360px;
+  padding: 42px;
+  border-radius: 22px;
+  backdrop-filter: blur(22px);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 0 40px rgba(0,0,0,0.55),
+    inset 0 0 0.5px rgba(255,255,255,0.3);
+  text-align: center;
+  transition: all 0.35s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 65px rgba(45,212,191,0.45),
+    0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* ===== TITLE ===== */
+.login-card h2 {
+  margin-bottom: 28px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+}
+
+/* ===== INPUT ===== */
+.login-card input {
+  width: 100%;
+  padding: 13px 16px;
+  margin: 11px 0;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.12);
+  color: white;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.login-card input::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+.login-card input:focus {
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 14px rgba(45,212,191,0.8);
+}
+
+/* ===== BUTTON ===== */
+.login-card button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 18px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #2dd4bf, #fb7185);
+  color: white;
+  transition: all 0.35s ease;
+}
+
+.login-card button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 25px rgba(45,212,191,0.9);
+}
+
+/* ===== ERROR ===== */
+#error {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #fb7185;
+}
