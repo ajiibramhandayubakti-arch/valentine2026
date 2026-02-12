@@ -5,6 +5,49 @@
   <title>Private Access</title>
   <link rel="stylesheet" href="assets/css/login.css">
 </head>
+  <script>
+const supabaseUrl = "https://PROJECT_ID.supabase.co";
+const supabaseKey = "PUBLIC_ANON_KEY";
+const supabase = supabaseJs.createClient(supabaseUrl, supabaseKey);
+
+const btn = document.getElementById("loginBtn");
+
+btn.addEventListener("click", async () => {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  if (!username || !password) {
+    showError("Username & password wajib diisi");
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("username", username)
+    .single();
+
+  if (error || !data) {
+    showError("Username not found");
+    return;
+  }
+
+  if (password !== data.password) {
+    showError("Password salah");
+    return;
+  }
+
+  localStorage.setItem("valentine_user", JSON.stringify(data));
+  window.location.href = "valentine.html";
+});
+
+function showError(msg) {
+  const err = document.getElementById("error");
+  err.innerText = msg;
+  err.style.display = "block";
+}
+</script>
+
 <body>
 
 <div class="login-card">
@@ -19,3 +62,4 @@
 
 </body>
 </html>
+
